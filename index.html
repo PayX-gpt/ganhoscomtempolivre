@@ -505,6 +505,10 @@
       body { box-shadow: 0 0 60px rgba(0,0,0,0.15); }
     }
   </style>
+  <!-- TikTok Pixel -->
+  <script>
+  !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(t,e){var n="https://analytics.tiktok.com/i18n/pixel/events.js",o=e&&e.partner;ttq._i=ttq._i||{},ttq._i[t]=[],ttq._i[t]._u=n,ttq._r=ttq._r||{},ttq._r[t]=e||{};var i=document.createElement("script");i.type="text/javascript",i.async=!0,i.src=n+(o?"?sdkId="+o:"");var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(i,a)};ttq.load('D70PMO3C77UDENRHHG30');ttq.page();}(window,document,'ttq');
+  </script>
 </head>
 <body>
 
@@ -729,15 +733,20 @@
 <section class="video-section">
   <h2>Ricardo explica tudo em menos de 5 minutos</h2>
   <p class="video-sub">Assista antes de decidir. Você vai entender exatamente como funciona.</p>
-  <div class="video-wrapper">
-    <vturb-smartplayer id="vid-69a5dbeca414172eb5d48ed7" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"></vturb-smartplayer>
-    <script type="text/javascript">
+  <div class="video-wrapper" style="position:relative; width:100%; padding-bottom:56.25%; background:#000; border-radius:16px; overflow:hidden;">
+    <div id="vid-69a5dbeca414172eb5d48ed7" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
+  </div>
+  <script>
+    (function(){
+      var vt=document.getElementById("vid-69a5dbeca414172eb5d48ed7");
+      if(!vt)return;
       var s=document.createElement("script");
       s.src="https://scripts.converteai.net/09ec79a4-c31f-44ce-ba7d-89003424c826/players/69a5dbeca414172eb5d48ed7/v4/player.js";
-      s.async=!0;
+      s.async=true;
+      s.onload=function(){if(window.SmartPlayer){try{new window.SmartPlayer("vid-69a5dbeca414172eb5d48ed7");}catch(e){}}};
       document.head.appendChild(s);
-    </script>
-  </div>
+    })();
+  </script>
 </section>
 
 <!-- FINAL CTA -->
@@ -756,13 +765,14 @@
 <div style="height: 80px;"></div>
 
 <script>
+  /* ── FAQ ── */
   function toggleFaq(el) {
     el.classList.toggle('open');
     const ans = el.nextElementSibling;
     ans.classList.toggle('open');
   }
 
-  // Countdown timer
+  /* ── COUNTDOWN ── */
   (function() {
     const bar = document.querySelector('.urgency-bar');
     let total = 14 * 60 + 59;
@@ -773,6 +783,100 @@
       const s = (total % 60).toString().padStart(2,'0');
       bar.textContent = `⚡ Só 47 vagas abertas hoje — fecha em ${m}:${s}`;
     }, 1000);
+  })();
+
+  /* ── TRACKING ── */
+  (function() {
+    const SUPA_URL = 'https://zeevqlxrnprpzyqsqzms.supabase.co';
+    const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplZXZxbHhybnBycHp5cXNxem1zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjUwNTgsImV4cCI6MjA4ODg0MTA1OH0.kseohGsiGEKhYN_5vQDBeVVa4lKXKItfDokk7CghfRw';
+
+    const SID = sessionStorage.getItem('lp_sid') || (function(){
+      var id = Math.random().toString(36).slice(2) + Date.now().toString(36);
+      sessionStorage.setItem('lp_sid', id);
+      return id;
+    })();
+
+    function post(table, data) {
+      fetch(SUPA_URL + '/rest/v1/' + table, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPA_KEY,
+          'Authorization': 'Bearer ' + SUPA_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': table === 'lp_sessions' ? 'resolution=merge-duplicates,return=minimal' : 'return=minimal'
+        },
+        body: JSON.stringify(data)
+      }).catch(function(){});
+    }
+
+    function trackEvent(type, section) {
+      post('lp_events', {
+        session_id: SID,
+        event_type: type,
+        section: section || null,
+        referrer: document.referrer || null,
+        user_agent: navigator.userAgent
+      });
+    }
+
+    function heartbeat() {
+      post('lp_sessions', {
+        session_id: SID,
+        last_seen: new Date().toISOString(),
+        referrer: document.referrer || null
+      });
+    }
+
+    // Init
+    heartbeat();
+    trackEvent('pageview');
+    setTimeout(function(){ if(window.ttq) ttq.track('ViewContent'); }, 500);
+
+    // Heartbeat every 30s
+    setInterval(heartbeat, 30000);
+
+    // Scroll tracking per section
+    var sectionMap = [
+      ['hero', document.querySelector('.hero')],
+      ['pain', document.querySelector('.pain')],
+      ['how', document.querySelector('.how')],
+      ['projection', document.querySelector('.projection')],
+      ['testimonials', document.querySelector('.testimonials')],
+      ['mentor', document.querySelector('.mentor')],
+      ['pricing', document.querySelector('#preco')],
+      ['guarantee', document.querySelector('.guarantee')],
+      ['faq', document.querySelector('.faq')],
+      ['video', document.querySelector('.video-section')],
+      ['final_cta', document.querySelector('.final-cta')]
+    ];
+
+    var seen = {};
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        var id = e.target.dataset.trackId;
+        if (e.isIntersecting && id && !seen[id]) {
+          seen[id] = true;
+          trackEvent('scroll_section', id);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    sectionMap.forEach(function(pair) {
+      if (pair[1]) {
+        pair[1].dataset.trackId = pair[0];
+        io.observe(pair[1]);
+      }
+    });
+
+    // Checkout click tracking
+    document.querySelectorAll('a[href*="kirvano"]').forEach(function(a) {
+      a.addEventListener('click', function() {
+        var cls = (a.closest('section, .sticky-cta') || {}).className || '';
+        var sec = cls.split(' ')[0] || 'unknown';
+        trackEvent('checkout_click', sec);
+        if (window.ttq) ttq.track('AddToCart', { value: 27.90, currency: 'BRL' });
+      });
+    });
   })();
 </script>
 

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Dashboard — Métricas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #00B37E; --green-dark: #00875A; --green-light: #00C48C;
+      --navy: #1A1A2E; --navy2: #242438;
+      --bg: #0D0D1A; --card: #1A1A2E; --card2: #212136;
+      --white: #FFFFFF; --gray1: #E8E8F0; --gray4: #888899;
+      --orange: #FF6B35;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--gray1); min-height: 100vh; }
+
+    /* ── AUTH ── */
+    #auth-screen {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; padding: 24px;
+    }
+    .auth-card {
+      background: var(--card); border-radius: 24px; padding: 40px 32px;
+      width: 100%; max-width: 360px; text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .auth-logo { font-size: 32px; margin-bottom: 8px; }
+    .auth-title { font-size: 20px; font-weight: 800; color: var(--white); margin-bottom: 6px; }
+    .auth-sub { font-size: 13px; color: var(--gray4); margin-bottom: 28px; }
+    .auth-input {
+      width: 100%; padding: 14px 16px; border-radius: 12px;
+      border: 1.5px solid rgba(255,255,255,0.1); background: var(--navy2);
+      color: var(--white); font-size: 15px; font-family: 'Inter', sans-serif;
+      outline: none; margin-bottom: 12px;
+    }
+    .auth-input:focus { border-color: var(--green); }
+    .auth-btn {
+      width: 100%; padding: 14px; border-radius: 12px; border: none;
+      background: linear-gradient(180deg, var(--green-light), var(--green-dark));
+      color: white; font-size: 15px; font-weight: 700; cursor: pointer;
+    }
+    .auth-error { color: var(--orange); font-size: 13px; margin-top: 10px; display: none; }
+
+    /* ── DASHBOARD ── */
+    #dashboard { display: none; padding: 24px; max-width: 900px; margin: 0 auto; }
+
+    .dash-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 28px; flex-wrap: wrap; gap: 12px;
+    }
+    .dash-title { font-size: 22px; font-weight: 800; color: var(--white); }
+    .dash-live {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(0,179,126,0.15); border-radius: 20px;
+      padding: 8px 16px; font-size: 13px; color: var(--green-light); font-weight: 600;
+    }
+    .live-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--green-light);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+
+    /* ── STAT CARDS ── */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px; margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--card); border-radius: 20px; padding: 20px 22px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .stat-label { font-size: 12px; color: var(--gray4); font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-val { font-size: 36px; font-weight: 800; color: var(--white); line-height: 1; }
+    .stat-val.green { color: var(--green-light); }
+    .stat-val.orange { color: var(--orange); }
+    .stat-sub { font-size: 12px; color: var(--gray4); margin-top: 4px; }
+
+    /* ── FUNNEL ── */
+    .section-title {
+      font-size: 15px; font-weight: 700; color: var(--white);
+      margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+    }
+    .section-title::before { content:''; flex:1; height:1px; background:rgba(255,255,255,0.08); }
+    .section-title::after { content:''; flex:3; height:1px; background:rgba(255,255,255,0.08); }
+
+    .funnel-card { background: var(--card); border-radius: 20px; padding: 20px; margin-bottom: 28px; }
+    .funnel-row {
+      display: flex; align-items: center; gap: 12px; padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .funnel-row:last-child { border-bottom: none; }
+    .funnel-icon { font-size: 18px; flex-shrink: 0; }
+    .funnel-label { flex: 1; font-size: 14px; color: var(--gray1); }
+    .funnel-count { font-size: 18px; font-weight: 800; color: var(--white); min-width: 50px; text-align: right; }
+    .funnel-pct { font-size: 12px; color: var(--gray4); min-width: 45px; text-align: right; }
+    .funnel-bar-wrap { width: 80px; background: rgba(255,255,255,0.06); border-radius: 4px; height: 6px; flex-shrink: 0; }
+    .funnel-bar { height: 6px; border-radius: 4px; background: linear-gradient(90deg, var(--green-light), var(--green-dark)); transition: width 0.6s ease; }
+
+    /* ── SCROLL HEATMAP ── */
+    .scroll-card { background: var(--card); border-radius: 20px; padding: 20px; margin-bottom: 28px; }
+    .scroll-row {
+      display: flex; align-items: center; gap: 10px; padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .scroll-row:last-child { border-bottom: none; }
+    .scroll-section { font-size: 13px; color: var(--gray1); flex: 1; }
+    .scroll-num { font-size: 14px; font-weight: 700; color: var(--white); min-width: 40px; text-align: right; }
+    .scroll-pct { font-size: 12px; color: var(--gray4); min-width: 40px; text-align: right; }
+    .scroll-bar-wrap { width: 100px; background: rgba(255,255,255,0.06); border-radius: 4px; height: 6px; flex-shrink: 0; }
+    .scroll-bar { height: 6px; border-radius: 4px; background: linear-gradient(90deg, #00C48C, #00875A); transition: width 0.6s ease; }
+
+    /* ── LAST UPDATE ── */
+    .last-update { font-size: 12px; color: var(--gray4); text-align: right; margin-top: -20px; margin-bottom: 28px; }
+
+    /* ── LOGOUT ── */
+    .logout-btn {
+      background: none; border: 1px solid rgba(255,255,255,0.1);
+      color: var(--gray4); padding: 8px 16px; border-radius: 10px;
+      font-size: 13px; cursor: pointer; font-family: 'Inter', sans-serif;
+    }
+    .logout-btn:hover { border-color: var(--orange); color: var(--orange); }
+  </style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">📊</div>
+    <div class="auth-title">Dashboard de Métricas</div>
+    <div class="auth-sub">Acesso restrito — Método Tempo Livre</div>
+    <input type="password" id="pwd-input" class="auth-input" placeholder="Senha de acesso" autofocus />
+    <button class="auth-btn" onclick="checkPwd()">Entrar</button>
+    <div class="auth-error" id="auth-error">Senha incorreta. Tente novamente.</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <div class="dash-header">
+    <div class="dash-title">📊 Métricas ao Vivo</div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <div class="dash-live"><span class="live-dot"></span><span id="live-count">–</span> online agora</div>
+      <button class="logout-btn" onclick="logout()">Sair</button>
+    </div>
+  </div>
+
+  <!-- STAT CARDS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Total de visitas</div>
+      <div class="stat-val green" id="s-pageviews">–</div>
+      <div class="stat-sub">sessões únicas</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Chegaram ao preço</div>
+      <div class="stat-val" id="s-pricing">–</div>
+      <div class="stat-sub" id="s-pricing-pct">–% dos visitantes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Clicaram no checkout</div>
+      <div class="stat-val orange" id="s-checkout">–</div>
+      <div class="stat-sub" id="s-checkout-pct">–% de conversão</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Online agora</div>
+      <div class="stat-val green" id="s-live2">–</div>
+      <div class="stat-sub">últimos 2 min</div>
+    </div>
+  </div>
+
+  <div class="last-update">Atualizado a cada 10s — <span id="last-ts">–</span></div>
+
+  <!-- FUNNEL -->
+  <div class="section-title">Funil de conversão</div>
+  <div class="funnel-card">
+    <div class="funnel-row">
+      <span class="funnel-icon">👁️</span>
+      <span class="funnel-label">Acessaram a página</span>
+      <span class="funnel-count" id="f-page">–</span>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" id="fb-page" style="width:100%"></div></div>
+      <span class="funnel-pct">100%</span>
+    </div>
+    <div class="funnel-row">
+      <span class="funnel-icon">📜</span>
+      <span class="funnel-label">Scrollaram até dor/identificação</span>
+      <span class="funnel-count" id="f-pain">–</span>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" id="fb-pain" style="width:0%"></div></div>
+      <span class="funnel-pct" id="fp-pain">–%</span>
+    </div>
+    <div class="funnel-row">
+      <span class="funnel-icon">📊</span>
+      <span class="funnel-label">Chegaram na projeção</span>
+      <span class="funnel-count" id="f-proj">–</span>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" id="fb-proj" style="width:0%"></div></div>
+      <span class="funnel-pct" id="fp-proj">–%</span>
+    </div>
+    <div class="funnel-row">
+      <span class="funnel-icon">🧑‍🏫</span>
+      <span class="funnel-label">Viram o mentor</span>
+      <span class="funnel-count" id="f-mentor">–</span>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" id="fb-mentor" style="width:0%"></div></div>
+      <span class="funnel-pct" id="fp-mentor">–%</span>
+    </div>
+    <div class="funnel-row">
+      <span class="funnel-icon">💳</span>
+      <span class="funnel-label">Chegaram nos planos (pricing)</span>
+      <span class="funnel-count" id="f-pricing">–</span>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" id="fb-pricing" style="width:0%"></div></div>
+      <span class="funnel-pct" id="fp-pricing">–%</span>
+    </div>
+    <div class="funnel-row">
+      <span class="funnel-icon">🛒</span>
+      <span class="funnel-label">Iniciaram checkout</span>
+      <span class="funnel-count" id="f-checkout">–</span>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" id="fb-checkout" style="width:0%"></div></div>
+      <span class="funnel-pct" id="fp-checkout">–%</span>
+    </div>
+  </div>
+
+  <!-- SCROLL HEATMAP -->
+  <div class="section-title">Abandono por seção</div>
+  <div class="scroll-card" id="scroll-heatmap"></div>
+</div>
+
+<script>
+  const PASS = 'ganhe102612';
+  const SUPA_URL = 'https://zeevqlxrnprpzyqsqzms.supabase.co';
+  const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplZXZxbHhybnBycHp5cXNxem1zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjUwNTgsImV4cCI6MjA4ODg0MTA1OH0.kseohGsiGEKhYN_5vQDBeVVa4lKXKItfDokk7CghfRw';
+
+  function checkPwd() {
+    const v = document.getElementById('pwd-input').value;
+    if (v === PASS) {
+      sessionStorage.setItem('dash_auth', '1');
+      document.getElementById('auth-screen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      loadMetrics();
+      setInterval(loadMetrics, 10000);
+    } else {
+      document.getElementById('auth-error').style.display = 'block';
+    }
+  }
+
+  document.getElementById('pwd-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkPwd();
+  });
+
+  function logout() {
+    sessionStorage.removeItem('dash_auth');
+    document.getElementById('auth-screen').style.display = 'flex';
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('pwd-input').value = '';
+  }
+
+  if (sessionStorage.getItem('dash_auth') === '1') {
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    loadMetrics();
+    setInterval(loadMetrics, 10000);
+  }
+
+  async function supaFetch(endpoint) {
+    const r = await fetch(SUPA_URL + '/rest/v1/' + endpoint, {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+    });
+    return r.json();
+  }
+
+  async function loadMetrics() {
+    try {
+      // Live visitors (last 2 min)
+      const twoMinAgo = new Date(Date.now() - 2 * 60 * 1000).toISOString();
+      const liveSessions = await supaFetch('lp_sessions?last_seen=gte.' + encodeURIComponent(twoMinAgo) + '&select=session_id');
+      const liveCount = Array.isArray(liveSessions) ? liveSessions.length : 0;
+      document.getElementById('live-count').textContent = liveCount;
+      document.getElementById('s-live2').textContent = liveCount;
+
+      // Total unique sessions (pageviews)
+      const pgData = await supaFetch('lp_events?event_type=eq.pageview&select=session_id');
+      const uniqueSessions = new Set(Array.isArray(pgData) ? pgData.map(r => r.session_id) : []);
+      const total = uniqueSessions.size;
+      document.getElementById('s-pageviews').textContent = total;
+      document.getElementById('f-page').textContent = total;
+
+      // Section scroll counts
+      const scrollData = await supaFetch('lp_events?event_type=eq.scroll_section&select=session_id,section');
+      const scrollMap = {};
+      if (Array.isArray(scrollData)) {
+        scrollData.forEach(function(r) {
+          if (!scrollMap[r.section]) scrollMap[r.section] = new Set();
+          scrollMap[r.section].add(r.session_id);
+        });
+      }
+
+      function scount(name) { return scrollMap[name] ? scrollMap[name].size : 0; }
+      function pct(n) { return total > 0 ? Math.round(n / total * 100) : 0; }
+
+      // Funnel
+      var pain = scount('pain'), proj = scount('projection'), mentor = scount('mentor');
+      var pricing = scount('pricing'), final = scount('final_cta');
+
+      setText('f-pain', pain); setBar('fb-pain', pct(pain)); setText('fp-pain', pct(pain) + '%');
+      setText('f-proj', proj); setBar('fb-proj', pct(proj)); setText('fp-proj', pct(proj) + '%');
+      setText('f-mentor', mentor); setBar('fb-mentor', pct(mentor)); setText('fp-mentor', pct(mentor) + '%');
+      setText('f-pricing', pricing); setBar('fb-pricing', pct(pricing)); setText('fp-pricing', pct(pricing) + '%');
+
+      document.getElementById('s-pricing').textContent = pricing;
+      document.getElementById('s-pricing-pct').textContent = pct(pricing) + '% dos visitantes';
+
+      // Checkout clicks
+      const ckData = await supaFetch('lp_events?event_type=eq.checkout_click&select=session_id');
+      const ckSessions = new Set(Array.isArray(ckData) ? ckData.map(r => r.session_id) : []);
+      const ckCount = ckSessions.size;
+      setText('f-checkout', ckCount); setBar('fb-checkout', pct(ckCount)); setText('fp-checkout', pct(ckCount) + '%');
+      document.getElementById('s-checkout').textContent = ckCount;
+      document.getElementById('s-checkout-pct').textContent = pct(ckCount) + '% de conversão';
+
+      // Scroll heatmap
+      const sections = [
+        ['hero', 'Hero / Topo'],
+        ['pain', 'Identificação (dor)'],
+        ['how', 'Como funciona'],
+        ['projection', 'Projeção de ganhos'],
+        ['testimonials', 'Depoimentos'],
+        ['mentor', 'Quem criou (mentor)'],
+        ['pricing', 'Planos e preços'],
+        ['guarantee', 'Garantia'],
+        ['faq', 'Perguntas frequentes'],
+        ['video', 'Vídeo do Ricardo'],
+        ['final_cta', 'CTA final']
+      ];
+
+      var maxCount = Math.max(total, 1);
+      var html = sections.map(function(s) {
+        var n = s[0] === 'hero' ? total : scount(s[0]);
+        var p = Math.round(n / maxCount * 100);
+        return '<div class="scroll-row">' +
+          '<span class="scroll-section">' + s[1] + '</span>' +
+          '<span class="scroll-num">' + n + '</span>' +
+          '<div class="scroll-bar-wrap"><div class="scroll-bar" style="width:' + p + '%"></div></div>' +
+          '<span class="scroll-pct">' + p + '%</span>' +
+          '</div>';
+      }).join('');
+      document.getElementById('scroll-heatmap').innerHTML = html;
+
+      // Timestamp
+      document.getElementById('last-ts').textContent = new Date().toLocaleTimeString('pt-BR');
+    } catch(e) {
+      console.error('Metrics error:', e);
+    }
+  }
+
+  function setText(id, val) { var el=document.getElementById(id); if(el) el.textContent = val; }
+  function setBar(id, pct) { var el=document.getElementById(id); if(el) el.style.width = pct + '%'; }
+</script>
+</body>
+</html>
