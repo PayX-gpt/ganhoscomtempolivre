@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Método Tempo Livre — Gere R$150 a R$500 por dia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #00B37E;
+      --green-dark: #00875A;
+      --green-light: #00C48C;
+      --navy: #1A1A2E;
+      --navy2: #242438;
+      --bg: #F5F5F7;
+      --white: #FFFFFF;
+      --gray1: #1A1A2E;
+      --gray2: #333333;
+      --gray3: #444444;
+      --gray4: #666666;
+      --gray5: #888888;
+      --gray6: #AAAAAA;
+      --orange: #E65100;
+      --orange-bg: #FFF3E0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--gray1);
+      max-width: 430px;
+      margin: 0 auto;
+      overflow-x: hidden;
+    }
+
+    /* ── URGENCY BAR ── */
+    .urgency-bar {
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      color: white;
+      text-align: center;
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 40px 24px 32px; }
+
+    /* ── LABELS ── */
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .label-green { background: rgba(0,179,126,0.15); color: var(--green-dark); }
+    .label-orange { background: var(--orange-bg); color: var(--orange); }
+    .label-dark { background: rgba(0,196,140,0.2); color: var(--green-light); }
+
+    /* ── HERO ── */
+    .hero { background: var(--white); }
+
+    .trust-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #E6FFF5;
+      color: var(--green-dark);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .trust-badge .dot {
+      width: 8px; height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .hero h1 {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--gray1);
+      margin-bottom: 14px;
+    }
+
+    .hero .sub {
+      font-size: 16px;
+      color: var(--gray3);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .hero .value {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .hero .value-sub {
+      font-size: 16px;
+      color: var(--gray3);
+      margin-bottom: 24px;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      display: block;
+      width: 100%;
+      background: linear-gradient(180deg, var(--green-light), var(--green-dark));
+      color: white;
+      font-size: 14px;
+      font-weight: 800;
+      text-align: center;
+      padding: 18px 16px;
+      border-radius: 16px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0,179,126,0.35);
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+    }
+    .btn-primary:hover { opacity: 0.93; }
+
+    .btn-secondary {
+      display: block;
+      width: 100%;
+      background: #E0E0E0;
+      color: #555;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      padding: 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .micro {
+      text-align: center;
+      font-size: 12px;
+      color: var(--gray5);
+      margin-top: 10px;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--navy);
+      padding: 24px 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 8px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--green-light);
+      display: block;
+    }
+    .stat-label {
+      font-size: 10px;
+      color: var(--gray6);
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* ── PAIN ── */
+    .pain { background: var(--white); }
+    .pain h2 {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--gray1);
+      margin-bottom: 20px;
+    }
+
+    .pain-card {
+      background: #FFF8F0;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--gray2);
+      font-weight: 600;
+    }
+    .pain-card .pain-desc {
+      font-weight: 400;
+      color: var(--gray4);
+      margin-top: 4px;
+      font-size: 13px;
+    }
+
+    .pain-break {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--green-dark);
+      line-height: 1.3;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: var(--bg); }
+    .how h2 {
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+
+    .step {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .step-num {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--green-light), var(--green-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .step-title { font-size: 15px; font-weight: 700; color: var(--gray1); margin-bottom: 4px; }
+    .step-desc { font-size: 13px; color: var(--gray4); line-height: 1.5; }
+
+    .step-note {
+      background: rgba(0,179,126,0.1);
+      border-radius: 12px;
+      padding: 14px 16px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-top: 8px;
+    }
+
+    /* ── PROJECTION ── */
+    .projection { background: var(--navy); }
+    .projection h2 { font-size: 22px; font-weight: 800; color: var(--white); margin-bottom: 20px; line-height: 1.2; }
+
+    .proj-table {
+      background: var(--navy2);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .proj-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+    }
+    .proj-row:nth-child(even) { background: #1E1E35; }
+    .proj-row.header { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .proj-row.header span { font-size: 13px; font-weight: 700; color: var(--gray6); }
+    .proj-day { font-size: 14px; color: #CCCCCC; }
+    .proj-val { font-size: 14px; font-weight: 700; color: var(--green-light); }
+    .proj-row.highlight .proj-val { font-size: 16px; font-weight: 800; }
+
+    .proj-total {
+      background: rgba(0,179,126,0.15);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+    }
+    .proj-total-label { font-size: 13px; color: var(--green-light); margin-bottom: 4px; }
+    .proj-total-val { font-size: 40px; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 4px; }
+    .proj-total-sub { font-size: 12px; color: var(--gray6); }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--bg); }
+    .testimonials h2 { font-size: 22px; font-weight: 800; margin-bottom: 20px; line-height: 1.2; }
+
+    .testimonial-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    }
+    .testi-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .testi-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--green-light), var(--green-dark));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 18px; font-weight: 800; flex-shrink: 0;
+    }
+    .testi-name { font-size: 15px; font-weight: 700; color: var(--gray1); }
+    .testi-meta { font-size: 12px; color: var(--gray5); }
+    .testi-stars { color: #F59E0B; font-size: 13px; margin-top: 2px; }
+    .testi-text { font-size: 14px; color: var(--gray3); line-height: 1.6; font-style: italic; }
+    .testi-result {
+      display: inline-block;
+      margin-top: 12px;
+      background: #E6FFF5;
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 8px;
+    }
+
+    /* ── MENTOR ── */
+    .mentor { background: var(--bg); }
+
+    .mentor-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .mentor-top { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+    .mentor-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 3px solid var(--green-light);
+    }
+    .mentor-name { font-size: 18px; font-weight: 800; color: var(--gray1); }
+    .mentor-title { font-size: 13px; color: var(--gray5); margin-top: 2px; line-height: 1.4; }
+    .mentor-badge {
+      display: inline-block;
+      background: #E0F7EF;
+      color: var(--green-dark);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+      margin-top: 6px;
+    }
+    .mentor-quote {
+      font-size: 15px;
+      color: var(--gray2);
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+    .mentor-stats { display: flex; gap: 0; border-top: 1px solid #F0F0F0; padding-top: 16px; }
+    .mentor-stat { flex: 1; text-align: center; }
+    .mentor-stat-num { font-size: 22px; font-weight: 800; color: var(--green); display: block; }
+    .mentor-stat-label { font-size: 11px; color: var(--gray5); display: block; margin-top: 2px; }
+
+    /* ── PRICING ── */
+    .pricing { background: var(--white); }
+    .pricing h2 { font-size: 22px; font-weight: 800; line-height: 1.2; margin-bottom: 24px; }
+
+    .plan {
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .plan-basic {
+      background: #F5F5F7;
+      border: 2px solid #E0E0E0;
+    }
+    .plan-vip {
+      background: var(--navy);
+      border: 2px solid var(--green);
+      box-shadow: 0 8px 32px rgba(0,196,140,0.2);
+    }
+
+    .plan-badges { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .plan-badge-main {
+      font-size: 11px; font-weight: 800; letter-spacing: 1px;
+      color: var(--gray5);
+    }
+    .plan-badge-main.green {
+      background: var(--green-light);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 12px;
+    }
+    .plan-badge-sub {
+      background: var(--orange-bg);
+      color: var(--orange);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 12px;
+    }
+
+    .plan-anchor { font-size: 13px; color: var(--gray5); text-decoration: line-through; margin-bottom: 2px; }
+    .plan-price { font-size: 36px; font-weight: 800; line-height: 1; }
+    .plan-price.dark { color: var(--gray1); }
+    .plan-price.light { color: var(--white); }
+    .plan-period { font-size: 14px; font-weight: 600; color: var(--green-light); margin-left: 4px; }
+    .plan-desc { font-size: 13px; color: var(--gray5); margin-top: 4px; margin-bottom: 16px; }
+    .plan-desc.light { color: var(--gray6); }
+
+    .plan-features { list-style: none; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .plan-features li { font-size: 13px; line-height: 1.4; }
+    .plan-features li.dark-text { color: var(--gray3); }
+    .plan-features li.light-text { color: var(--white); }
+    .plan-features li.bonus { color: var(--green-dark); font-weight: 700; }
+    .plan-features li.bonus-vip { color: var(--green-light); font-weight: 600; }
+    .plan-features .separator {
+      color: var(--green-light);
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+      padding: 4px 0;
+    }
+
+    .bonus-total {
+      background: rgba(0,179,126,0.15);
+      border-radius: 12px;
+      padding: 10px 16px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green-light);
+      margin-bottom: 16px;
+    }
+
+    /* ── GUARANTEE ── */
+    .guarantee { background: var(--bg); }
+    .guarantee-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .guarantee-icon { font-size: 48px; margin-bottom: 12px; }
+    .guarantee-title { font-size: 22px; font-weight: 800; color: var(--gray1); margin-bottom: 12px; }
+    .guarantee-text { font-size: 15px; color: var(--gray4); line-height: 1.6; }
+
+    /* ── FAQ ── */
+    .faq { background: var(--white); }
+    .faq h2 { font-size: 22px; font-weight: 800; margin-bottom: 20px; }
+
+    .faq-item {
+      border-bottom: 1px solid #F0F0F0;
+      padding: 16px 0;
+    }
+    .faq-q { font-size: 15px; font-weight: 700; color: var(--gray1); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .faq-q .arrow { font-size: 12px; color: var(--green); transition: transform 0.2s; flex-shrink: 0; }
+    .faq-q.open .arrow { transform: rotate(180deg); }
+    .faq-a { font-size: 14px; color: var(--gray4); line-height: 1.6; margin-top: 10px; display: none; }
+    .faq-a.open { display: block; }
+
+    /* ── VIDEO ── */
+    .video-section { background: var(--navy); padding: 40px 24px 32px; }
+    .video-section h2 { font-size: 22px; font-weight: 800; color: var(--white); text-align: center; margin-bottom: 8px; line-height: 1.3; }
+    .video-section .video-sub { font-size: 14px; color: var(--gray6); text-align: center; margin-bottom: 24px; }
+    .video-wrapper { border-radius: 16px; overflow: hidden; }
+
+    /* ── FINAL CTA ── */
+    .final-cta { background: var(--bg); text-align: center; }
+    .final-cta h2 { font-size: 24px; font-weight: 800; color: var(--gray1); margin-bottom: 12px; line-height: 1.2; }
+    .final-cta p { font-size: 15px; color: var(--gray4); margin-bottom: 24px; line-height: 1.5; }
+
+    /* ── STICKY CTA ── */
+    .sticky-cta {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 12px 24px 20px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      z-index: 99;
+    }
+
+    @media (min-width: 431px) {
+      body { box-shadow: 0 0 60px rgba(0,0,0,0.15); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- URGENCY BAR -->
+<div class="urgency-bar">⚡ Só 47 vagas abertas hoje — fecha em 14:59</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="trust-badge">
+    <span class="dot"></span>
+    36.859 brasileiros já ativaram o sistema — você é o próximo
+  </div>
+  <h1>Enquanto você lê isso, alguém que não sabe nada de tecnologia acabou de receber R$247 na conta.</h1>
+  <p class="sub">Não foi sorte. Foi o sistema. E agora ele está disponível para você — mas só até hoje.</p>
+  <p class="value">R$150 a R$500 por dia</p>
+  <p class="value-sub">Sem sair de casa. Sem chefe. Sem precisar entender nada.</p>
+  <a href="https://pay.kirvano.com/40793945-5d50-43cd-bac6-5958e95288af" class="btn-primary">QUERO QUE O SISTEMA TRABALHE POR MIM AGORA →</a>
+  <p class="micro">🔒 Garantia total de 30 dias — ou seu dinheiro de volta, sem perguntas</p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item"><span class="stat-num">36k+</span><span class="stat-label">alunos</span></div>
+  <div class="stat-item"><span class="stat-num">R$12M+</span><span class="stat-label">em resultados</span></div>
+  <div class="stat-item"><span class="stat-num">3 dias</span><span class="stat-label">1º resultado</span></div>
+  <div class="stat-item"><span class="stat-num">4.8★</span><span class="stat-label">avaliação</span></div>
+</div>
+
+<!-- PAIN -->
+<section class="pain">
+  <div class="label label-orange">💸 VOCÊ SE IDENTIFICA COM ISSO?</div>
+  <h2>Você se identifica com alguma dessas situações?</h2>
+  <div class="pain-card">
+    💸 O mês tem 30 dias mas o salário dura 20
+    <p class="pain-desc">Você faz as contas todo mês esperando sobrar alguma coisa. Nunca sobra.</p>
+  </div>
+  <div class="pain-card">
+    😮‍💨 Você vê pessoas mais novas ganhando mais do que você
+    <p class="pain-desc">Dói. Porque você sabe que tem mais valor do que seu extrato mostra.</p>
+  </div>
+  <div class="pain-card">
+    📱 Já tentou algo diferente — e perdeu tempo ou dinheiro
+    <p class="pain-desc">Curso que não serviu. Indicação que não funcionou. Você parou de acreditar.</p>
+  </div>
+  <div class="pain-card">
+    🕐 Você trabalha mais do que deveria para ganhar menos do que merece
+    <p class="pain-desc">30 anos de esforço. E ainda depende de um salário que não te respeita.</p>
+  </div>
+  <p class="pain-break">A culpa não é sua.<br>O problema nunca foi você. Foi não ter a ferramenta certa nas mãos — até agora.</p>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="label label-green">⚡ COMO FUNCIONA</div>
+  <h2>Como funciona em 3 passos simples</h2>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div>
+      <div class="step-title">Crie seu acesso agora</div>
+      <div class="step-desc">Pelo celular, sem baixar nada. Pronto em menos de 2 minutos.</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div>
+      <div class="step-title">O sistema entra em ação por você</div>
+      <div class="step-desc">Você não precisa fazer nada. Ele trabalha enquanto você dorme, descansa ou passeia.</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div>
+      <div class="step-title">Acompanhe o que está acontecendo</div>
+      <div class="step-desc">Veja tudo pelo celular, quando quiser. Você vive sua vida e o sistema cuida do resto.</div>
+    </div>
+  </div>
+  <div class="step-note">Só 10 minutos por dia para saber como seu dinheiro está crescendo.</div>
+</section>
+
+<!-- PROJECTION -->
+<section class="projection">
+  <div class="label label-dark">📊 PROJEÇÃO REAL</div>
+  <h2>Veja quanto um perfil como o seu pode gerar:</h2>
+  <div class="proj-table">
+    <div class="proj-row header"><span>Dias</span><span>Resultado estimado</span></div>
+    <div class="proj-row"><span class="proj-day">Dia 3</span><span class="proj-val">R$127 — R$247</span></div>
+    <div class="proj-row"><span class="proj-day">Dia 7</span><span class="proj-val">R$380 — R$690</span></div>
+    <div class="proj-row"><span class="proj-day">Dia 15</span><span class="proj-val">R$1.200 — R$2.100</span></div>
+    <div class="proj-row highlight"><span class="proj-day">Dia 30</span><span class="proj-val">R$3.800 — R$6.300 ✅</span></div>
+  </div>
+  <div class="proj-total">
+    <div class="proj-total-label">Potencial mensal estimado</div>
+    <div class="proj-total-val">R$6.300</div>
+    <div class="proj-total-sub">Com 10 minutos por dia. Sem sair de casa. Sem chefe.</div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="label label-green">⭐ RESULTADOS REAIS</div>
+  <h2>Pessoas reais. Resultados reais:</h2>
+  <div class="testimonial-card">
+    <div class="testi-header">
+      <div class="testi-avatar">A</div>
+      <div>
+        <div class="testi-name">Antônio M.</div>
+        <div class="testi-meta">48 anos • Aposentado</div>
+        <div class="testi-stars">★★★★★</div>
+      </div>
+    </div>
+    <p class="testi-text">"Fiz minha primeira operação hoje. Deu R$127 líquido na conta. Tenho 48 anos e achei que não era pra mim. Me surpreendi demais."</p>
+    <span class="testi-result">✅ Primeiro resultado: R$127</span>
+  </div>
+  <div class="testimonial-card">
+    <div class="testi-header">
+      <div class="testi-avatar">M</div>
+      <div>
+        <div class="testi-name">Maria José S.</div>
+        <div class="testi-meta">44 anos • MG</div>
+        <div class="testi-stars">★★★★★</div>
+      </div>
+    </div>
+    <p class="testi-text">"Em 1 mês, R$4.230 de renda extra. Tenho 44 anos, sou de MG e não entendia nada disso. Valeu cada centavo que paguei. Estou muito grata."</p>
+    <span class="testi-result">✅ Renda extra: R$4.230 no 1º mês</span>
+  </div>
+</section>
+
+<!-- MENTOR -->
+<section class="mentor">
+  <div class="label label-green">🎓 O ESPECIALISTA POR TRÁS DO MÉTODO</div>
+  <div class="mentor-card">
+    <div class="mentor-top">
+      <img class="mentor-avatar" src="mark-tilbury.jpg" alt="Ricardo Almeida" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+      <div class="testi-avatar" style="display:none; width:72px; height:72px; font-size:28px; border-radius:50%;">R</div>
+      <div>
+        <div class="mentor-name">Ricardo Almeida</div>
+        <div class="mentor-title">Especialista em renda passiva automatizada • 11 anos de experiência</div>
+        <span class="mentor-badge">Resultados monitorados em tempo real</span>
+      </div>
+    </div>
+    <p class="mentor-quote">"Desenvolvi o Método Tempo Livre depois de 8 anos testando sistemas — e descartei tudo que não funcionava de verdade. O que sobrou é o que você vai usar. Simples, supervisionado e com resultado documentado."</p>
+    <div class="mentor-stats">
+      <div class="mentor-stat"><span class="mentor-stat-num">11 anos</span><span class="mentor-stat-label">de mercado</span></div>
+      <div class="mentor-stat"><span class="mentor-stat-num">36.859</span><span class="mentor-stat-label">alunos ativos</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="preco">
+  <div class="label label-orange">📋 SEU INVESTIMENTO</div>
+  <h2>Invista menos do que um almoço. Mude sua situação financeira para sempre.</h2>
+
+  <!-- BASIC PLAN -->
+  <div class="plan plan-basic">
+    <div class="plan-badges"><span class="plan-badge-main">BÁSICO</span></div>
+    <div class="plan-price dark">R$19,90 <span style="font-size:14px; font-weight:500; color:var(--gray5);">único</span></div>
+    <ul class="plan-features">
+      <li class="dark-text">✅&nbsp; Método Tempo Livre completo</li>
+      <li class="dark-text">✅&nbsp; Guia de ativação passo a passo</li>
+      <li class="dark-text">✅&nbsp; Suporte por 30 dias</li>
+      <li class="bonus">🎁&nbsp; Bônus: E-book de acompanhamento</li>
+      <li class="bonus" style="font-size:11px; padding-left:20px; font-weight:500;">Valor: R$37 — incluído sem custo</li>
+    </ul>
+    <a href="https://pay.kirvano.com/32b0e892-ad1d-4cf2-bb2e-d99bcb403ce2" class="btn-secondary">Quero começar por R$19,90</a>
+  </div>
+
+  <!-- VIP PLAN -->
+  <div class="plan plan-vip">
+    <div class="plan-badges">
+      <span class="plan-badge-main green">⭐ RECOMENDADO</span>
+      <span class="plan-badge-sub">MELHOR VALOR</span>
+    </div>
+    <div class="plan-anchor">Antes R$97</div>
+    <div class="plan-price light">R$27,90 <span class="plan-period">vitalício</span></div>
+    <div class="plan-desc light">Pague uma vez. Nunca mais pague nada.</div>
+    <ul class="plan-features">
+      <li class="light-text">✅&nbsp; Acesso permanente + todas as atualizações</li>
+      <li class="light-text">✅&nbsp; Suporte humano direto com nossa equipe</li>
+      <li class="separator">── 🎁 BÔNUS INCLUSOS ──</li>
+      <li class="bonus-vip">🎁&nbsp; Vídeo-aula exclusiva com Ricardo — R$79</li>
+      <li class="bonus-vip">🎁&nbsp; Planilha de metas mensais — R$29</li>
+      <li class="light-text">🛡️&nbsp; Garantia estendida de 60 dias</li>
+      <li class="bonus-vip" style="font-weight:700;">🔒&nbsp; Risco total: R$0 — devolvemos tudo, sem formulário</li>
+    </ul>
+    <div class="bonus-total">🎁&nbsp; R$108 em bônus inclusos — sem custo extra</div>
+    <a href="https://pay.kirvano.com/40793945-5d50-43cd-bac6-5958e95288af" class="btn-primary">GARANTIR MEU ACESSO AGORA →</a>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="guarantee">
+  <div class="guarantee-card">
+    <div class="guarantee-icon">🛡️</div>
+    <div class="guarantee-title">Sua Garantia Total de 30 Dias</div>
+    <p class="guarantee-text">Se em 30 dias você não gostar, devolvemos cada centavo. Sem formulário, sem enrolação, sem risco nenhum para você.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <h2>Perguntas frequentes</h2>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">Preciso entender de tecnologia para usar? <span class="arrow">▼</span></div>
+    <div class="faq-a">Não. Se você sabe mexer no celular, você usa. Nosso suporte te acompanha do zero até o primeiro resultado.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">Preciso ter muito dinheiro para começar? <span class="arrow">▼</span></div>
+    <div class="faq-a">Não. Tem aluno que começou com menos de R$100. O mais importante é ativar sua conta e deixar o sistema trabalhar por você.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">Em quanto tempo vejo o primeiro resultado? <span class="arrow">▼</span></div>
+    <div class="faq-a">A maioria dos nossos alunos vê o primeiro resultado em até 3 dias. E se não acontecer, você tem 30 dias de garantia total.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">Funciona pelo celular? <span class="arrow">▼</span></div>
+    <div class="faq-a">Sim. Tudo pelo celular. Sem computador, sem complicação. Você acessa onde estiver, na hora que quiser.</div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="video-section">
+  <h2>Ricardo explica tudo em menos de 5 minutos</h2>
+  <p class="video-sub">Assista antes de decidir. Você vai entender exatamente como funciona.</p>
+  <div class="video-wrapper">
+    <vturb-smartplayer id="vid-69a5dbeca414172eb5d48ed7" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"></vturb-smartplayer>
+    <script type="text/javascript">
+      var s=document.createElement("script");
+      s.src="https://scripts.converteai.net/09ec79a4-c31f-44ce-ba7d-89003424c826/players/69a5dbeca414172eb5d48ed7/v4/player.js";
+      s.async=!0;
+      document.head.appendChild(s);
+    </script>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2>Você leu até aqui porque sabe que precisa mudar.</h2>
+  <p>Agora é só dar um passo: entre na plataforma e o sistema cuida do resto por você.</p>
+  <a href="https://pay.kirvano.com/40793945-5d50-43cd-bac6-5958e95288af" class="btn-primary" style="margin-bottom:12px;">GARANTIR MEU ACESSO AGORA →</a>
+  <p class="micro">🔒 Garantia total de 30 dias — sem risco</p>
+</section>
+
+<!-- STICKY CTA -->
+<div class="sticky-cta">
+  <a href="https://pay.kirvano.com/40793945-5d50-43cd-bac6-5958e95288af" class="btn-primary">GARANTIR ACESSO — R$27,90 VITALÍCIO →</a>
+</div>
+<!-- spacer for sticky cta -->
+<div style="height: 80px;"></div>
+
+<script>
+  function toggleFaq(el) {
+    el.classList.toggle('open');
+    const ans = el.nextElementSibling;
+    ans.classList.toggle('open');
+  }
+
+  // Countdown timer
+  (function() {
+    const bar = document.querySelector('.urgency-bar');
+    let total = 14 * 60 + 59;
+    setInterval(() => {
+      if (total <= 0) { total = 14 * 60 + 59; return; }
+      total--;
+      const m = Math.floor(total / 60).toString().padStart(2,'0');
+      const s = (total % 60).toString().padStart(2,'0');
+      bar.textContent = `⚡ Só 47 vagas abertas hoje — fecha em ${m}:${s}`;
+    }, 1000);
+  })();
+</script>
+
+</body>
+</html>
