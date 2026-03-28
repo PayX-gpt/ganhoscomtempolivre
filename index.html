@@ -319,6 +319,10 @@
       display: flex; align-items: center; justify-content: center;
       color: white; font-size: 18px; font-weight: 800; flex-shrink: 0;
     }
+    img.testi-avatar {
+      object-fit: cover;
+      border: 2px solid var(--green-light);
+    }
     .testi-name { font-size: 15px; font-weight: 700; color: var(--gray1); }
     .testi-meta { font-size: 12px; color: var(--gray5); }
     .testi-stars { color: #F59E0B; font-size: 13px; margin-top: 2px; }
@@ -612,7 +616,7 @@
   <h2>Pessoas reais. Resultados reais:</h2>
   <div class="testimonial-card">
     <div class="testi-header">
-      <div class="testi-avatar">A</div>
+      <img class="testi-avatar" src="https://i.pravatar.cc/88?img=12" alt="Antônio M." onerror="this.outerHTML='<div class=\'testi-avatar\'>A</div>'" />
       <div>
         <div class="testi-name">Antônio M.</div>
         <div class="testi-meta">48 anos • Aposentado</div>
@@ -624,7 +628,7 @@
   </div>
   <div class="testimonial-card">
     <div class="testi-header">
-      <div class="testi-avatar">M</div>
+      <img class="testi-avatar" src="https://i.pravatar.cc/88?img=47" alt="Maria José S." onerror="this.outerHTML='<div class=\'testi-avatar\'>M</div>'" />
       <div>
         <div class="testi-name">Maria José S.</div>
         <div class="testi-meta">44 anos • MG</div>
