@@ -17,10 +17,7 @@
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--gray1); min-height: 100vh; }
 
     /* ── AUTH ── */
-    #auth-screen {
-      display: flex; align-items: center; justify-content: center;
-      min-height: 100vh; padding: 24px;
-    }
+    #auth-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; }
     .auth-card {
       background: var(--card); border-radius: 24px; padding: 40px 32px;
       width: 100%; max-width: 360px; text-align: center;
@@ -44,11 +41,11 @@
     .auth-error { color: var(--orange); font-size: 13px; margin-top: 10px; display: none; }
 
     /* ── DASHBOARD ── */
-    #dashboard { display: none; padding: 24px; max-width: 900px; margin: 0 auto; }
+    #dashboard { display: none; padding: 24px; max-width: 960px; margin: 0 auto; }
 
     .dash-header {
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 28px; flex-wrap: wrap; gap: 12px;
+      margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
     }
     .dash-title { font-size: 22px; font-weight: 800; color: var(--white); }
     .dash-live {
@@ -62,65 +59,83 @@
     }
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
 
+    /* ── PERIOD TABS ── */
+    .period-tabs {
+      display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;
+    }
+    .period-btn {
+      padding: 8px 18px; border-radius: 20px; border: 1.5px solid rgba(255,255,255,0.1);
+      background: transparent; color: var(--gray4); font-size: 13px; font-weight: 600;
+      cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.15s;
+    }
+    .period-btn:hover { border-color: var(--green-light); color: var(--green-light); }
+    .period-btn.active {
+      background: rgba(0,179,126,0.2); border-color: var(--green-light);
+      color: var(--green-light);
+    }
+
     /* ── STAT CARDS ── */
     .stats-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px; margin-bottom: 28px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px; margin-bottom: 24px;
     }
     .stat-card {
-      background: var(--card); border-radius: 20px; padding: 20px 22px;
+      background: var(--card); border-radius: 20px; padding: 18px 20px;
       border: 1px solid rgba(255,255,255,0.06);
     }
-    .stat-label { font-size: 12px; color: var(--gray4); font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .stat-val { font-size: 36px; font-weight: 800; color: var(--white); line-height: 1; }
+    .stat-label { font-size: 11px; color: var(--gray4); font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-val { font-size: 34px; font-weight: 800; color: var(--white); line-height: 1; }
     .stat-val.green { color: var(--green-light); }
     .stat-val.orange { color: var(--orange); }
     .stat-sub { font-size: 12px; color: var(--gray4); margin-top: 4px; }
 
-    /* ── FUNNEL ── */
+    /* ── SECTION TITLES ── */
     .section-title {
-      font-size: 15px; font-weight: 700; color: var(--white);
-      margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 700; color: var(--gray4);
+      margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.8px;
     }
-    .section-title::before { content:''; flex:1; height:1px; background:rgba(255,255,255,0.08); }
-    .section-title::after { content:''; flex:3; height:1px; background:rgba(255,255,255,0.08); }
 
-    .funnel-card { background: var(--card); border-radius: 20px; padding: 20px; margin-bottom: 28px; }
+    /* ── FUNNEL ── */
+    .funnel-card { background: var(--card); border-radius: 20px; padding: 4px 20px; margin-bottom: 24px; }
     .funnel-row {
-      display: flex; align-items: center; gap: 12px; padding: 10px 0;
+      display: flex; align-items: center; gap: 12px; padding: 13px 0;
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
     .funnel-row:last-child { border-bottom: none; }
-    .funnel-icon { font-size: 18px; flex-shrink: 0; }
-    .funnel-label { flex: 1; font-size: 14px; color: var(--gray1); }
-    .funnel-count { font-size: 18px; font-weight: 800; color: var(--white); min-width: 50px; text-align: right; }
-    .funnel-pct { font-size: 12px; color: var(--gray4); min-width: 45px; text-align: right; }
-    .funnel-bar-wrap { width: 80px; background: rgba(255,255,255,0.06); border-radius: 4px; height: 6px; flex-shrink: 0; }
-    .funnel-bar { height: 6px; border-radius: 4px; background: linear-gradient(90deg, var(--green-light), var(--green-dark)); transition: width 0.6s ease; }
+    .funnel-icon { font-size: 16px; flex-shrink: 0; width: 24px; text-align: center; }
+    .funnel-label { flex: 1; font-size: 13px; color: var(--gray1); }
+    .funnel-count { font-size: 17px; font-weight: 800; color: var(--white); min-width: 44px; text-align: right; }
+    .funnel-bar-wrap { width: 72px; background: rgba(255,255,255,0.06); border-radius: 4px; height: 5px; flex-shrink: 0; }
+    .funnel-bar { height: 5px; border-radius: 4px; background: linear-gradient(90deg, var(--green-light), var(--green-dark)); transition: width 0.5s ease; }
+    .funnel-pct { font-size: 11px; color: var(--gray4); min-width: 36px; text-align: right; }
 
     /* ── SCROLL HEATMAP ── */
-    .scroll-card { background: var(--card); border-radius: 20px; padding: 20px; margin-bottom: 28px; }
+    .scroll-card { background: var(--card); border-radius: 20px; padding: 4px 20px; margin-bottom: 24px; }
     .scroll-row {
-      display: flex; align-items: center; gap: 10px; padding: 8px 0;
+      display: flex; align-items: center; gap: 10px; padding: 11px 0;
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
     .scroll-row:last-child { border-bottom: none; }
     .scroll-section { font-size: 13px; color: var(--gray1); flex: 1; }
-    .scroll-num { font-size: 14px; font-weight: 700; color: var(--white); min-width: 40px; text-align: right; }
-    .scroll-pct { font-size: 12px; color: var(--gray4); min-width: 40px; text-align: right; }
-    .scroll-bar-wrap { width: 100px; background: rgba(255,255,255,0.06); border-radius: 4px; height: 6px; flex-shrink: 0; }
-    .scroll-bar { height: 6px; border-radius: 4px; background: linear-gradient(90deg, #00C48C, #00875A); transition: width 0.6s ease; }
+    .scroll-num { font-size: 14px; font-weight: 700; color: var(--white); min-width: 38px; text-align: right; }
+    .scroll-pct { font-size: 11px; color: var(--gray4); min-width: 36px; text-align: right; }
+    .scroll-bar-wrap { width: 90px; background: rgba(255,255,255,0.06); border-radius: 4px; height: 5px; flex-shrink: 0; }
+    .scroll-bar { height: 5px; border-radius: 4px; transition: width 0.5s ease; }
 
-    /* ── LAST UPDATE ── */
-    .last-update { font-size: 12px; color: var(--gray4); text-align: right; margin-top: -20px; margin-bottom: 28px; }
-
-    /* ── LOGOUT ── */
+    /* ── BOTTOM BAR ── */
+    .bottom-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 8px; flex-wrap: wrap; gap: 8px;
+    }
+    .last-update { font-size: 12px; color: var(--gray4); }
     .logout-btn {
       background: none; border: 1px solid rgba(255,255,255,0.1);
-      color: var(--gray4); padding: 8px 16px; border-radius: 10px;
-      font-size: 13px; cursor: pointer; font-family: 'Inter', sans-serif;
+      color: var(--gray4); padding: 7px 14px; border-radius: 10px;
+      font-size: 12px; cursor: pointer; font-family: 'Inter', sans-serif;
     }
     .logout-btn:hover { border-color: var(--orange); color: var(--orange); }
+
+    .empty-state { text-align: center; padding: 40px 0; color: var(--gray4); font-size: 14px; }
   </style>
 </head>
 <body>
@@ -133,7 +148,7 @@
     <div class="auth-sub">Acesso restrito — Método Tempo Livre</div>
     <input type="password" id="pwd-input" class="auth-input" placeholder="Senha de acesso" autofocus />
     <button class="auth-btn" onclick="checkPwd()">Entrar</button>
-    <div class="auth-error" id="auth-error">Senha incorreta. Tente novamente.</div>
+    <div class="auth-error" id="auth-error">Senha incorreta.</div>
   </div>
 </div>
 
@@ -143,14 +158,23 @@
     <div class="dash-title">📊 Métricas ao Vivo</div>
     <div style="display:flex;gap:10px;align-items:center;">
       <div class="dash-live"><span class="live-dot"></span><span id="live-count">–</span> online agora</div>
-      <button class="logout-btn" onclick="logout()">Sair</button>
     </div>
+  </div>
+
+  <!-- PERIOD TABS -->
+  <div class="period-tabs">
+    <button class="period-btn active" data-period="today" onclick="setPeriod('today',this)">Hoje</button>
+    <button class="period-btn" data-period="yesterday" onclick="setPeriod('yesterday',this)">Ontem</button>
+    <button class="period-btn" data-period="3d" onclick="setPeriod('3d',this)">Últimos 3 dias</button>
+    <button class="period-btn" data-period="7d" onclick="setPeriod('7d',this)">Últimos 7 dias</button>
+    <button class="period-btn" data-period="30d" onclick="setPeriod('30d',this)">Últimos 30 dias</button>
+    <button class="period-btn" data-period="all" onclick="setPeriod('all',this)">Tudo</button>
   </div>
 
   <!-- STAT CARDS -->
   <div class="stats-grid">
     <div class="stat-card">
-      <div class="stat-label">Total de visitas</div>
+      <div class="stat-label">Visitas únicas</div>
       <div class="stat-val green" id="s-pageviews">–</div>
       <div class="stat-sub">sessões únicas</div>
     </div>
@@ -160,7 +184,7 @@
       <div class="stat-sub" id="s-pricing-pct">–% dos visitantes</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Clicaram no checkout</div>
+      <div class="stat-label">Clicaram checkout</div>
       <div class="stat-val orange" id="s-checkout">–</div>
       <div class="stat-sub" id="s-checkout-pct">–% de conversão</div>
     </div>
@@ -170,8 +194,6 @@
       <div class="stat-sub">últimos 2 min</div>
     </div>
   </div>
-
-  <div class="last-update">Atualizado a cada 10s — <span id="last-ts">–</span></div>
 
   <!-- FUNNEL -->
   <div class="section-title">Funil de conversão</div>
@@ -184,15 +206,15 @@
       <span class="funnel-pct">100%</span>
     </div>
     <div class="funnel-row">
-      <span class="funnel-icon">📜</span>
-      <span class="funnel-label">Scrollaram até dor/identificação</span>
+      <span class="funnel-icon">💸</span>
+      <span class="funnel-label">Viram a seção de dor</span>
       <span class="funnel-count" id="f-pain">–</span>
       <div class="funnel-bar-wrap"><div class="funnel-bar" id="fb-pain" style="width:0%"></div></div>
       <span class="funnel-pct" id="fp-pain">–%</span>
     </div>
     <div class="funnel-row">
       <span class="funnel-icon">📊</span>
-      <span class="funnel-label">Chegaram na projeção</span>
+      <span class="funnel-label">Viram a projeção</span>
       <span class="funnel-count" id="f-proj">–</span>
       <div class="funnel-bar-wrap"><div class="funnel-bar" id="fb-proj" style="width:0%"></div></div>
       <span class="funnel-pct" id="fp-proj">–%</span>
@@ -206,7 +228,7 @@
     </div>
     <div class="funnel-row">
       <span class="funnel-icon">💳</span>
-      <span class="funnel-label">Chegaram nos planos (pricing)</span>
+      <span class="funnel-label">Viram os planos</span>
       <span class="funnel-count" id="f-pricing">–</span>
       <div class="funnel-bar-wrap"><div class="funnel-bar" id="fb-pricing" style="width:0%"></div></div>
       <span class="funnel-pct" id="fp-pricing">–%</span>
@@ -223,32 +245,36 @@
   <!-- SCROLL HEATMAP -->
   <div class="section-title">Abandono por seção</div>
   <div class="scroll-card" id="scroll-heatmap"></div>
+
+  <div class="bottom-bar">
+    <div class="last-update">Atualiza a cada 10s — <span id="last-ts">–</span></div>
+    <button class="logout-btn" onclick="logout()">Sair</button>
+  </div>
 </div>
 
 <script>
-  const PASS = 'ganhe102612';
-  const SUPA_URL = 'https://zeevqlxrnprpzyqsqzms.supabase.co';
-  const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplZXZxbHhybnBycHp5cXNxem1zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjUwNTgsImV4cCI6MjA4ODg0MTA1OH0.kseohGsiGEKhYN_5vQDBeVVa4lKXKItfDokk7CghfRw';
+  var PASS = 'ganhe102612';
+  var SUPA_URL = 'https://zeevqlxrnprpzyqsqzms.supabase.co';
+  var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplZXZxbHhybnBycHp5cXNxem1zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjUwNTgsImV4cCI6MjA4ODg0MTA1OH0.kseohGsiGEKhYN_5vQDBeVVa4lKXKItfDokk7CghfRw';
+  var currentPeriod = 'today';
+  var refreshTimer = null;
 
+  /* ── AUTH ── */
   function checkPwd() {
-    const v = document.getElementById('pwd-input').value;
-    if (v === PASS) {
+    if (document.getElementById('pwd-input').value === PASS) {
       sessionStorage.setItem('dash_auth', '1');
       document.getElementById('auth-screen').style.display = 'none';
       document.getElementById('dashboard').style.display = 'block';
-      loadMetrics();
-      setInterval(loadMetrics, 10000);
+      startDashboard();
     } else {
       document.getElementById('auth-error').style.display = 'block';
     }
   }
-
-  document.getElementById('pwd-input').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') checkPwd();
-  });
+  document.getElementById('pwd-input').addEventListener('keydown', function(e) { if (e.key === 'Enter') checkPwd(); });
 
   function logout() {
     sessionStorage.removeItem('dash_auth');
+    if (refreshTimer) clearInterval(refreshTimer);
     document.getElementById('auth-screen').style.display = 'flex';
     document.getElementById('dashboard').style.display = 'none';
     document.getElementById('pwd-input').value = '';
@@ -257,36 +283,94 @@
   if (sessionStorage.getItem('dash_auth') === '1') {
     document.getElementById('auth-screen').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
+    startDashboard();
+  }
+
+  function startDashboard() {
     loadMetrics();
-    setInterval(loadMetrics, 10000);
+    refreshTimer = setInterval(loadMetrics, 10000);
   }
 
-  async function supaFetch(endpoint) {
-    const r = await fetch(SUPA_URL + '/rest/v1/' + endpoint, {
+  /* ── PERIOD ── */
+  function setPeriod(p, btn) {
+    currentPeriod = p;
+    document.querySelectorAll('.period-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    loadMetrics();
+  }
+
+  function getPeriodStart(period) {
+    var now = new Date();
+    // Use Brasília time offset (UTC-3)
+    var brt = new Date(now.getTime() - 3 * 60 * 60 * 1000);
+    var todayBRT = brt.toISOString().split('T')[0]; // YYYY-MM-DD in BRT
+
+    if (period === 'today') {
+      // Start of today in BRT = todayBRT 00:00:00 BRT = todayBRT 03:00:00 UTC
+      return todayBRT + 'T03:00:00.000Z';
+    } else if (period === 'yesterday') {
+      var yest = new Date(brt);
+      yest.setDate(yest.getDate() - 1);
+      var yestDate = yest.toISOString().split('T')[0];
+      return { from: yestDate + 'T03:00:00.000Z', to: todayBRT + 'T03:00:00.000Z' };
+    } else if (period === '3d') {
+      var d = new Date(brt); d.setDate(d.getDate() - 2);
+      return d.toISOString().split('T')[0] + 'T03:00:00.000Z';
+    } else if (period === '7d') {
+      var d = new Date(brt); d.setDate(d.getDate() - 6);
+      return d.toISOString().split('T')[0] + 'T03:00:00.000Z';
+    } else if (period === '30d') {
+      var d = new Date(brt); d.setDate(d.getDate() - 29);
+      return d.toISOString().split('T')[0] + 'T03:00:00.000Z';
+    }
+    return null; // all time
+  }
+
+  /* ── FETCH ── */
+  function supaFetch(endpoint) {
+    return fetch(SUPA_URL + '/rest/v1/' + endpoint, {
       headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
-    });
-    return r.json();
+    }).then(function(r){ return r.json(); });
   }
 
+  function buildTimeFilter(period) {
+    var p = getPeriodStart(period);
+    if (!p) return '';
+    if (typeof p === 'object') {
+      // yesterday: from + to
+      return '&created_at=gte.' + encodeURIComponent(p.from) + '&created_at=lt.' + encodeURIComponent(p.to);
+    }
+    return '&created_at=gte.' + encodeURIComponent(p);
+  }
+
+  /* ── METRICS ── */
   async function loadMetrics() {
     try {
-      // Live visitors (last 2 min)
-      const twoMinAgo = new Date(Date.now() - 2 * 60 * 1000).toISOString();
-      const liveSessions = await supaFetch('lp_sessions?last_seen=gte.' + encodeURIComponent(twoMinAgo) + '&select=session_id');
-      const liveCount = Array.isArray(liveSessions) ? liveSessions.length : 0;
-      document.getElementById('live-count').textContent = liveCount;
-      document.getElementById('s-live2').textContent = liveCount;
+      var tf = buildTimeFilter(currentPeriod);
 
-      // Total unique sessions (pageviews)
-      const pgData = await supaFetch('lp_events?event_type=eq.pageview&select=session_id');
-      const uniqueSessions = new Set(Array.isArray(pgData) ? pgData.map(r => r.session_id) : []);
-      const total = uniqueSessions.size;
-      document.getElementById('s-pageviews').textContent = total;
-      document.getElementById('f-page').textContent = total;
+      // Live visitors (always real-time, ignore period)
+      var twoMinAgo = new Date(Date.now() - 2 * 60 * 1000).toISOString();
+      var liveSess = await supaFetch('lp_sessions?last_seen=gte.' + encodeURIComponent(twoMinAgo) + '&select=session_id');
+      var liveCount = Array.isArray(liveSess) ? liveSess.length : 0;
+      setText('live-count', liveCount);
+      setText('s-live2', liveCount);
 
-      // Section scroll counts
-      const scrollData = await supaFetch('lp_events?event_type=eq.scroll_section&select=session_id,section');
-      const scrollMap = {};
+      // Pageviews (unique sessions)
+      var pgData = await supaFetch('lp_events?event_type=eq.pageview&select=session_id' + tf);
+      var uniqueSessions = new Set(Array.isArray(pgData) ? pgData.map(function(r){ return r.session_id; }) : []);
+      var total = uniqueSessions.size;
+      setText('s-pageviews', total);
+      setText('f-page', total);
+
+      if (total === 0) {
+        setEmptyState();
+        setText('last-ts', new Date().toLocaleTimeString('pt-BR'));
+        return;
+      }
+
+      // Scroll events
+      var scrollData = await supaFetch('lp_events?event_type=eq.scroll_section&select=session_id,section' + tf);
+      var scrollMap = {};
       if (Array.isArray(scrollData)) {
         scrollData.forEach(function(r) {
           if (!scrollMap[r.section]) scrollMap[r.section] = new Set();
@@ -297,63 +381,74 @@
       function scount(name) { return scrollMap[name] ? scrollMap[name].size : 0; }
       function pct(n) { return total > 0 ? Math.round(n / total * 100) : 0; }
 
-      // Funnel
-      var pain = scount('pain'), proj = scount('projection'), mentor = scount('mentor');
-      var pricing = scount('pricing'), final = scount('final_cta');
+      var pain = scount('pain'), proj = scount('projection');
+      var mentor = scount('mentor'), pricing = scount('pricing');
 
-      setText('f-pain', pain); setBar('fb-pain', pct(pain)); setText('fp-pain', pct(pain) + '%');
-      setText('f-proj', proj); setBar('fb-proj', pct(proj)); setText('fp-proj', pct(proj) + '%');
+      setText('f-pain', pain);    setBar('fb-pain', pct(pain));    setText('fp-pain', pct(pain) + '%');
+      setText('f-proj', proj);    setBar('fb-proj', pct(proj));    setText('fp-proj', pct(proj) + '%');
       setText('f-mentor', mentor); setBar('fb-mentor', pct(mentor)); setText('fp-mentor', pct(mentor) + '%');
       setText('f-pricing', pricing); setBar('fb-pricing', pct(pricing)); setText('fp-pricing', pct(pricing) + '%');
 
-      document.getElementById('s-pricing').textContent = pricing;
-      document.getElementById('s-pricing-pct').textContent = pct(pricing) + '% dos visitantes';
+      setText('s-pricing', pricing);
+      setText('s-pricing-pct', pct(pricing) + '% dos visitantes');
 
       // Checkout clicks
-      const ckData = await supaFetch('lp_events?event_type=eq.checkout_click&select=session_id');
-      const ckSessions = new Set(Array.isArray(ckData) ? ckData.map(r => r.session_id) : []);
-      const ckCount = ckSessions.size;
+      var ckData = await supaFetch('lp_events?event_type=eq.checkout_click&select=session_id' + tf);
+      var ckSet = new Set(Array.isArray(ckData) ? ckData.map(function(r){ return r.session_id; }) : []);
+      var ckCount = ckSet.size;
       setText('f-checkout', ckCount); setBar('fb-checkout', pct(ckCount)); setText('fp-checkout', pct(ckCount) + '%');
-      document.getElementById('s-checkout').textContent = ckCount;
-      document.getElementById('s-checkout-pct').textContent = pct(ckCount) + '% de conversão';
+      setText('s-checkout', ckCount);
+      setText('s-checkout-pct', pct(ckCount) + '% de conversão');
 
       // Scroll heatmap
-      const sections = [
-        ['hero', 'Hero / Topo'],
-        ['pain', 'Identificação (dor)'],
-        ['how', 'Como funciona'],
-        ['projection', 'Projeção de ganhos'],
-        ['testimonials', 'Depoimentos'],
-        ['mentor', 'Quem criou (mentor)'],
-        ['pricing', 'Planos e preços'],
-        ['guarantee', 'Garantia'],
-        ['faq', 'Perguntas frequentes'],
-        ['video', 'Vídeo do Ricardo'],
-        ['final_cta', 'CTA final']
+      var sections = [
+        ['hero', '🏠 Hero / Topo', total],
+        ['pain', '💸 Identificação (dor)', scount('pain')],
+        ['how', '⚡ Como funciona', scount('how')],
+        ['projection', '📊 Projeção de ganhos', scount('projection')],
+        ['testimonials', '⭐ Depoimentos', scount('testimonials')],
+        ['mentor', '🧑‍🏫 Mentor / Especialista', scount('mentor')],
+        ['pricing', '💳 Planos e preços', scount('pricing')],
+        ['guarantee', '🛡️ Garantia', scount('guarantee')],
+        ['faq', '❓ FAQ', scount('faq')],
+        ['video', '🎥 Vídeo do Ricardo', scount('video')],
+        ['final_cta', '🚀 CTA final', scount('final_cta')]
       ];
 
-      var maxCount = Math.max(total, 1);
-      var html = sections.map(function(s) {
-        var n = s[0] === 'hero' ? total : scount(s[0]);
-        var p = Math.round(n / maxCount * 100);
+      var html = sections.map(function(s, i) {
+        var n = s[2];
+        var p = Math.round(n / Math.max(total, 1) * 100);
+        // Color gradient from green (high) to red (low)
+        var hue = Math.round(p * 1.2); // 0=red, 120=green
+        var barColor = 'hsl(' + hue + ', 70%, 45%)';
+        var drop = i > 0 ? (sections[i-1][2] - n) : 0;
+        var dropStr = (i > 0 && drop > 0) ? '<span style="font-size:11px;color:var(--orange);margin-left:6px;">-' + drop + '</span>' : '';
         return '<div class="scroll-row">' +
-          '<span class="scroll-section">' + s[1] + '</span>' +
+          '<span class="scroll-section">' + s[1] + dropStr + '</span>' +
           '<span class="scroll-num">' + n + '</span>' +
-          '<div class="scroll-bar-wrap"><div class="scroll-bar" style="width:' + p + '%"></div></div>' +
+          '<div class="scroll-bar-wrap"><div class="scroll-bar" style="width:' + p + '%;background:' + barColor + '"></div></div>' +
           '<span class="scroll-pct">' + p + '%</span>' +
           '</div>';
       }).join('');
-      document.getElementById('scroll-heatmap').innerHTML = html;
+      document.getElementById('scroll-heatmap').innerHTML = html || '<div class="empty-state">Sem dados no período</div>';
 
-      // Timestamp
-      document.getElementById('last-ts').textContent = new Date().toLocaleTimeString('pt-BR');
+      setText('last-ts', new Date().toLocaleTimeString('pt-BR'));
     } catch(e) {
       console.error('Metrics error:', e);
     }
   }
 
-  function setText(id, val) { var el=document.getElementById(id); if(el) el.textContent = val; }
-  function setBar(id, pct) { var el=document.getElementById(id); if(el) el.style.width = pct + '%'; }
+  function setEmptyState() {
+    ['f-pain','f-proj','f-mentor','f-pricing','f-checkout','s-pricing','s-checkout'].forEach(function(id){ setText(id, '0'); });
+    ['fb-pain','fb-proj','fb-mentor','fb-pricing','fb-checkout'].forEach(function(id){ setBar(id, 0); });
+    ['fp-pain','fp-proj','fp-mentor','fp-pricing','fp-checkout'].forEach(function(id){ setText(id, '0%'); });
+    setText('s-pricing-pct', '0% dos visitantes');
+    setText('s-checkout-pct', '0% de conversão');
+    document.getElementById('scroll-heatmap').innerHTML = '<div class="empty-state">Sem dados no período selecionado</div>';
+  }
+
+  function setText(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; }
+  function setBar(id, pct) { var el = document.getElementById(id); if (el) el.style.width = pct + '%'; }
 </script>
 </body>
 </html>
