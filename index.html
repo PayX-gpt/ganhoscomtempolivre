@@ -807,7 +807,8 @@
       return id;
     })();
 
-    function post(table, data) {
+    function post(table, data, retries) {
+      retries = retries || 0;
       fetch(SUPA_URL + '/rest/v1/' + table, {
         method: 'POST',
         headers: {
@@ -817,6 +818,11 @@
           'Prefer': table === 'lp_sessions' ? 'resolution=merge-duplicates,return=minimal' : 'return=minimal'
         },
         body: JSON.stringify(data)
+      }).then(function(r) {
+        // 503 = Supabase cold start — retry up to 3x with backoff
+        if (r.status === 503 && retries < 3) {
+          setTimeout(function(){ post(table, data, retries + 1); }, (retries + 1) * 3000);
+        }
       }).catch(function(){});
     }
 
