@@ -488,6 +488,23 @@
     .faq-a { font-size: 14px; color: var(--gray4); line-height: 1.6; margin-top: 10px; display: none; }
     .faq-a.open { display: block; }
 
+    /* ── SCROLL HINT ── */
+    .scroll-hint {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 6px; margin-top: 20px; padding-bottom: 4px;
+    }
+    .scroll-hint-text {
+      font-size: 12px; color: var(--gray5); text-align: center; line-height: 1.4;
+    }
+    .scroll-arrow {
+      font-size: 20px; color: var(--green);
+      animation: bounce 1.4s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(6px); opacity: 0.5; }
+    }
+
     /* ── VIDEO ── */
     .video-section { background: var(--navy); padding: 40px 24px 32px; }
     .video-section h2 { font-size: 22px; font-weight: 800; color: var(--white); text-align: center; margin-bottom: 8px; line-height: 1.3; }
@@ -541,6 +558,10 @@
   <p class="value-sub">Sem sair de casa. Sem chefe. Sem precisar entender nada.</p>
   <a href="https://pay.kirvano.com/40793945-5d50-43cd-bac6-5958e95288af" class="btn-primary">QUERO QUE O SISTEMA TRABALHE POR MIM AGORA →</a>
   <p class="micro">🔒 Garantia total de 30 dias — ou seu dinheiro de volta, sem perguntas</p>
+  <div class="scroll-hint">
+    <span class="scroll-hint-text">Veja por que está funcionando para quem nunca usou tecnologia</span>
+    <span class="scroll-arrow">↓</span>
+  </div>
 </section>
 
 <!-- STATS BAR -->
@@ -572,6 +593,23 @@
     <p class="pain-desc">30 anos de esforço. E ainda depende de um salário que não te respeita.</p>
   </div>
   <p class="pain-break">A culpa não é sua.<br>O problema nunca foi você. Foi não ter a ferramenta certa nas mãos — até agora.</p>
+</section>
+
+<!-- VIDEO (moved up — higher audience here) -->
+<section class="video-section">
+  <h2>Ricardo explica tudo em menos de 5 minutos</h2>
+  <p class="video-sub">Assista antes de decidir. Você vai entender exatamente como funciona.</p>
+  <script type="text/javascript">var s=document.createElement("script");s.src="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/sdk.js",s.async=!0,document.head.appendChild(s);</script>
+  <div id="ifr_69a5dbeca414172eb5d48ed7_wrapper" style="margin: 0 auto; width: 100%; max-width: 400px; border-radius: 16px; overflow: hidden;">
+    <div style="position: relative; padding: 177.77777777777777% 0 0 0;" id="ifr_69a5dbeca414172eb5d48ed7_aspect">
+      <iframe frameborder="0" allowfullscreen src="about:blank"
+        id="ifr_69a5dbeca414172eb5d48ed7"
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+        referrerpolicy="origin"
+        onload="this.onload=null,this.src='https://scripts.converteai.net/09ec79a4-c31f-44ce-ba7d-89003424c826/players/69a5dbeca414172eb5d48ed7/v4/embed.html'+(location.search||'?')+'&vl='+encodeURIComponent(location.href)">
+      </iframe>
+    </div>
+  </div>
 </section>
 
 <!-- HOW IT WORKS -->
@@ -727,36 +765,23 @@
   <h2>Perguntas frequentes</h2>
   <div class="faq-item">
     <div class="faq-q" onclick="toggleFaq(this)">Preciso entender de tecnologia para usar? <span class="arrow">▼</span></div>
-    <div class="faq-a">Não. Se você sabe mexer no celular, você usa. Nosso suporte te acompanha do zero até o primeiro resultado.</div>
+    <div class="faq-a">Não. Se você usa WhatsApp, você usa isso. Suporte humano incluso desde o primeiro dia.</div>
   </div>
   <div class="faq-item">
     <div class="faq-q" onclick="toggleFaq(this)">Preciso ter muito dinheiro para começar? <span class="arrow">▼</span></div>
-    <div class="faq-a">Não. Tem aluno que começou com menos de R$100. O mais importante é ativar sua conta e deixar o sistema trabalhar por você.</div>
+    <div class="faq-a">Não. Você já está pagando o método agora. O sistema trabalha com o que você tem disponível.</div>
   </div>
   <div class="faq-item">
     <div class="faq-q" onclick="toggleFaq(this)">Em quanto tempo vejo o primeiro resultado? <span class="arrow">▼</span></div>
-    <div class="faq-a">A maioria dos nossos alunos vê o primeiro resultado em até 3 dias. E se não acontecer, você tem 30 dias de garantia total.</div>
+    <div class="faq-a">Em até 3 dias. Se não acontecer em 30, devolvemos tudo — sem formulário, sem perguntas.</div>
   </div>
   <div class="faq-item">
     <div class="faq-q" onclick="toggleFaq(this)">Funciona pelo celular? <span class="arrow">▼</span></div>
-    <div class="faq-a">Sim. Tudo pelo celular. Sem computador, sem complicação. Você acessa onde estiver, na hora que quiser.</div>
+    <div class="faq-a">Sim. 100% pelo celular, sem instalar nada. Você acessa de qualquer lugar.</div>
   </div>
-</section>
-
-<!-- VIDEO -->
-<section class="video-section">
-  <h2>Ricardo explica tudo em menos de 5 minutos</h2>
-  <p class="video-sub">Assista antes de decidir. Você vai entender exatamente como funciona.</p>
-  <script type="text/javascript">var s=document.createElement("script");s.src="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/sdk.js",s.async=!0,document.head.appendChild(s);</script>
-  <div id="ifr_69a5dbeca414172eb5d48ed7_wrapper" style="margin: 0 auto; width: 100%; max-width: 400px; border-radius: 16px; overflow: hidden;">
-    <div style="position: relative; padding: 177.77777777777777% 0 0 0;" id="ifr_69a5dbeca414172eb5d48ed7_aspect">
-      <iframe frameborder="0" allowfullscreen src="about:blank"
-        id="ifr_69a5dbeca414172eb5d48ed7"
-        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-        referrerpolicy="origin"
-        onload="this.onload=null,this.src='https://scripts.converteai.net/09ec79a4-c31f-44ce-ba7d-89003424c826/players/69a5dbeca414172eb5d48ed7/v4/embed.html'+(location.search||'?')+'&vl='+encodeURIComponent(location.href)">
-      </iframe>
-    </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">E se eu não gostar? <span class="arrow">▼</span></div>
+    <div class="faq-a">Garantia total de 30 dias. Manda uma mensagem e devolvemos cada centavo — sem burocracia.</div>
   </div>
 </section>
 
